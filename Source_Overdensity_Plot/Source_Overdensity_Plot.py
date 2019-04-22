@@ -8,6 +8,7 @@ from os import system
 from astropy.io import fits
 from astroquery.ned import Ned
 import sys
+import pandas as pd
 #path_GR=os.path.realpath('../') #Path needs to be updated
 #path_GR=os.path.realpath('../../../') #Path needs to be updated
 #"/Volumes/xray/anthony/Research_Git"
@@ -51,7 +52,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
     #path=os.path.realpath('../SQL_Standard_File/SQL_Standard_File.csv')
     #path=os.path.realpath('../SQL_Standard_File/Source_Flux_Table.csv') #To Do: Update this path
     #path=os.path.realpath('../../../SQL_Standard_File/Source_Flux_Table.csv') #To Do: Update this path
-    path="/Volumes/xray/anthony/Research_Git/SQL_Standard_File/Source_Flux_Table.csv"
+    #path="/Volumes/xray/anthony/Research_Git/SQL_Standard_File/Source_Flux_Table.csv" #THIS CSC FILE DOES NOT HAVE ALL THE SOURCES ! ! ! IT IS WRONG ! ! !
     #print "Path=",path
     #os.chdir(path)
     #os.chdir('~/Desktop/SQL_Standard_File/')
@@ -71,6 +72,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
     for Evt2_File_L in Evt2_File_H_L:
         Cur_Galaxy_Obs_ID=Evt2_File_L[0]
         Galaxy_Obs_ID_L.append(Cur_Galaxy_Obs_ID)
+    """
     data = ascii.read(path) #data:-astropy.table.table.Table, data, The data from the SQL_Standard_File
     #data2=open("SQL_Sandard_File.csv","r")
     #print data2
@@ -91,6 +93,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
     #print type(Obs_ID_A)
     Obs_ID_L=list(Obs_ID_A) #Obs_ID_L:-List, Observation_Idenification_List, The list containing all Observation IDs in the SQL_Standard_File (So it is indexable)
     #print "Obs_ID_L ", Obs_ID_L
+    """
     for Obs_ID in Galaxy_Obs_ID_L:
         #print type(Obs_ID_L)
         #print Obs_ID_A
@@ -114,6 +117,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
                 #print "i ", i
                 Matching_Index_List.append(i) #Appends the current index (ref. QGname_L) to the Matching_Index_List
         """
+        """
         Matching_Index_List=[] #Matching_Index_List:-List, Matching_Index_List, The list of all indexes (ref. QGname_L) that corresepond to the input Galaxy Name, All arrays are of equal lenth, and "ith" value of an array is the correseponding value for any other arrays "ith" value, so for example Obs_ID_L[228]=794 and the Galaxy in the Observation is QGname_L[228]="NGC 891", Note both lists have the same index
         #Matching_Obs_ID_List=[] #Matching_Obs_ID_List:-List, Matching_Obs_ID_List, The list of all ob
         for i in range(0,len(Obs_ID_L)): # i:-int, i, the "ith" index of QGname_L
@@ -133,6 +137,8 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
             Cur_Match_Dec=Dec_L[Cur_Matching_Index] #Cur_Match_Dec:-numpy.float64, Current_Match_Declination, The Dec of the current source in decimal degrees
             RA_Match_L.append(Cur_Match_RA) #RA_Match_L:-list, Right_Ascension_Match_List, The list of all source RA's for the input Galaxy Name in decimal degrees
             Dec_Match_L.append(Cur_Match_Dec) #Dec_Match_L:-list, Declination_Match_List, The list of all source Dec's for the input Galaxy Name in decimal degrees
+        """
+
         #print RA_Match_L
         #print len(RA_Match_L)
         #print Dec_Match_L
@@ -145,6 +151,25 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         G_Data= Ned.query_object(Gname) #G_Data:-astropy.table.table.Table, Galaxy_Data, The Galaxy Data Table queried from NED
         #print "G_Data : \n",G_Data
         #print type(G_Data)
+        #/Volumes/xray/anthony/Research_Git/Master_Code/Master_Output/MESSIER_066/Coords_Lists/9548
+        #MESSIER_066_ObsID_9548_Coords.csv
+        Coords_Path="/Volumes/xray/anthony/Research_Git/Master_Code/Master_Output/"+Gname_Modifed+"/Coords_Lists/"+str(Obs_ID)+"/"+Gname_Modifed+"_ObsID_"+str(Obs_ID)+"_Coords.csv"
+        Coords_Table=pd.read_csv(Coords_Path)
+        #print "Coords_Table: \n",Coords_Table
+        #Phys_X,Phys_Y,Chip_X,Chip_Y,Chip_ID,RA,DEC,Offaxis_Angle
+        #Dec_Match_L,RA_Match_L
+        RA_Match_Deg_DF=Coords_Table["RA"] #In decimal degrees
+        RA_Match_Deg_L=list(RA_Match_Deg_DF)
+        RA_Match_DF=RA_Match_Deg_DF*60.0 #In units of arcmins
+        #print "RA_Match_DF :\n", RA_Match_DF
+        RA_Match_L=list(RA_Match_DF)
+        #print "RA_Match_L :\n", RA_Match_L
+        Dec_Match_Deg_DF=Coords_Table["DEC"] #In decimal degrees
+        Dec_Match_Deg_L=list(Dec_Match_Deg_DF)
+        Dec_Match_DF=Dec_Match_Deg_DF*60.0 #In units of arcmins
+        Dec_Match_L=list(Dec_Match_DF)
+        #print "Dec_Match_L :\n", Dec_Match_L
+        #return "STOPPING PROGRAM"
         """
         Dia_Table = Ned.get_table(Gname, table='diameters') #Dia_Table:-astropy.table.table.Table, Diameter_Table, The Data table queried from NED that contains the infomation about the Major Axis of the input Galaxy Name
         #print type(Dia_Table)
@@ -209,7 +234,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
             raGC=float(G_Data['RA'])
             decGC=float(G_Data['DEC'])
         #area_A=[((((((decGC-dec)**2)+((raGC-ra)**2)))*(math.pi))/area_T) for dec,ra in zip(decA,raA)]
-        area_A=[((((((decGC-dec)**2)+((raGC-ra)**2)))*(math.pi))/area_T) for dec,ra in zip(Dec_Match_L,RA_Match_L)] #REAL ONE
+        area_A=[((((((decGC-dec)**2)+((raGC-ra)**2)))*(math.pi))/area_T) for dec,ra in zip(Dec_Match_Deg_L,RA_Match_Deg_L)] #REAL ONE
         #disA=[math.sqrt(((decGC-dec)**2)+((raGC-ra)**2)) for dec,ra in zip(decA,raA)] #REAL ONE
         #print area_A
         #area_max=max(area_A)
@@ -290,6 +315,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         #For Area Histrograms
         raGC_Arcmin=raGC*60.0
         decGC_Arcmin=decGC*60.0
+        '''
         RA_A_Arcmin=RA_A*60.0
         RA_L_Arcmin=list(RA_A_Arcmin)
         Dec_A_Arcmin=Dec_A*60.0
@@ -310,6 +336,7 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
             Dec_Match_L.append(Cur_Match_Dec) #Dec_Match_L:-list, Declination_Match_List, The list of all source Dec's for the input Galaxy Name in decimal degrees
             #print "Dec_Match_L : ", Dec_Match_L
             #print "decGC_Arcmin : ", decGC_Arcmin
+        '''
         disA=[math.sqrt(((decGC_Arcmin-dec)**2)+((raGC_Arcmin-ra)**2)) for dec,ra in zip(Dec_Match_L,RA_Match_L)] #REAL ONE in units of arcmins
         #print "disA : ", disA
         #dis_max=np.max(disA)
@@ -443,5 +470,6 @@ def Driver_Code(Gname):
 #Driver_Code('MESSIER 084')
 #Driver_Code('NGC_6946')
 #NGC_1365
-Source_Histogram_Plot('NGC_1365')
+#Source_Histogram_Plot('NGC_1365')
 #Source_Histogram_Plot('NGC_3631')
+#Source_Histogram_Plot('MESSIER_066')

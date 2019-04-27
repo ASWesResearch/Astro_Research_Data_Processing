@@ -1,4 +1,12 @@
 import numpy as np
+"""
+path_GR="/Volumes/xray/anthony/Research_Git"
+#print "path_GR=",path_GR
+sys.path.append(os.path.abspath(path_GR))
+from Galaxy_Name_Reducer import Galaxy_Name_Reducer
+from D25_Finder import D25_Finder
+#from File_Query_Code import File_Query_Code_5
+"""
 def Background_Source_Calc(Flux,Hardness_Str="S"):
     if(Hardness_Str=="S"):
         #Soft Equation
@@ -9,6 +17,9 @@ def Background_Source_Calc(Flux,Hardness_Str="S"):
     return N
 
 def Big_Background_Source_Calc(fpath,r_step=1.0):
+    #Gname_Modifed=Galaxy_Name_Reducer.Galaxy_Name_Reducer(Gname)
+    #D25_S_Maj_Deg=D25_Finder.D25_Finder(Gname)
+    #D25_S_Maj_Arcmin=D25_S_Maj_Deg*60.0
     file=open(fpath,"r")
     data=file.read()
     #print data

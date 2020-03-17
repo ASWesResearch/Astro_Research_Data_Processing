@@ -50,12 +50,15 @@ def Source_Overdensity_Master(Gname_L,Source_Overdensity_Plot_Run_B=False):
     #print "Galaxy_TS_Data_L : ", Galaxy_TS_Data_L
     D25_Excess_B_HL=[]
     for Gname in Gname_L:
-        Gname_Modifed=Galaxy_Name_Reducer.Galaxy_Name_Reducer(Gname)
-        if(Source_Overdensity_Plot_Run_B):
-            Source_Overdensity_Plot.Source_Histogram_Plot(Gname,Outpath="/Volumes/xray/anthony/Research_Git/Data_Processing/Source_Overdensity/Source_Overdensity_Plot/Source_Overdensity_Histograms/")
-        D25_Excess_B=D25_Excess_Test.D25_Excess_Test(Gname)
-        Cur_D25_Excess_B_L=[Gname_Modifed,D25_Excess_B]
-        D25_Excess_B_HL.append(Cur_D25_Excess_B_L)
+        try:
+            Gname_Modifed=Galaxy_Name_Reducer.Galaxy_Name_Reducer(Gname)
+            if(Source_Overdensity_Plot_Run_B):
+                Source_Overdensity_Plot.Source_Histogram_Plot(Gname,Outpath="/Volumes/xray/anthony/Research_Git/Data_Processing/Source_Overdensity/Source_Overdensity_Plot/Source_Overdensity_Histograms/")
+            D25_Excess_B=D25_Excess_Test.D25_Excess_Test(Gname)
+            Cur_D25_Excess_B_L=[Gname_Modifed,D25_Excess_B]
+            D25_Excess_B_HL.append(Cur_D25_Excess_B_L)
+        except:
+            print str(Gname)+" has an error!"
     print "D25_Excess_B_HL : ", D25_Excess_B_HL
     Num_Excess=0.0
     Num_Galaxies=len(D25_Excess_B_HL)
@@ -69,16 +72,16 @@ def Source_Overdensity_Master(Gname_L,Source_Overdensity_Plot_Run_B=False):
     N_TS_L=[]
     for Tidal_Stream_Data in Galaxy_TS_Data_L:
         Gname_TS=Tidal_Stream_Data[0]
-        print "Gname_TS:", Gname_TS
+        #print "Gname_TS:", Gname_TS
         TS_B=Tidal_Stream_Data[1]
         #print "TS_B:",TS_B
         for D25_Excess_Data in D25_Excess_B_HL:
             Gname_Excess=D25_Excess_Data[0]
-            print "Gname_Excess:",Gname_Excess
+            #print "Gname_Excess:",Gname_Excess
             Excess_B=D25_Excess_Data[1]
             #print "Excess_B:",Excess_B
             if(Gname_TS==Gname_Excess):
-                print "Name Match"
+                #print "Name Match"
                 if(TS_B==True):
                     if(Excess_B==True):
                         Y_TS_L.append(1.0)
@@ -118,4 +121,18 @@ def Source_Overdensity_Master(Gname_L,Source_Overdensity_Plot_Run_B=False):
 
 #print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'NGC 5813', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 086', 'MESSIER 084', 'MESSIER 083', 'MESSIER 082', 'NGC 0278', 'MESSIER 088', 'NGC 3585', 'NGC 7507', 'NGC 1637', 'NGC 4473', 'NGC 1365', 'MESSIER 074', 'NGC 4570', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4494', 'IC 1613', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 3923', 'NGC 891', 'NGC 1300', 'UGC 05340', 'NGC 3631', 'UGCA 166', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 5253', 'NGC 4742', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 1700', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 4449', 'MESSIER 049', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 0119', 'NGC 2865', 'MESSIER 059', 'NGC 1427', 'NGC 3628', 'NGC 0055', 'NGC 4457', 'NGC 4214', 'NGC 4459', 'NGC 3521'])
 
-print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'NGC 5813', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 086', 'MESSIER 084', 'MESSIER 083', 'MESSIER 082', 'NGC 0278', 'MESSIER 088', 'NGC 3585', 'NGC 7507', 'NGC 1637', 'NGC 4473', 'NGC 1365', 'MESSIER 074', 'NGC 4570', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4494', 'IC 1613', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 3923', 'NGC 891', 'NGC 1300', 'UGC 05340', 'NGC 3631', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 5253', 'NGC 4742', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 1700', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 4449', 'MESSIER 049', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 2865', 'MESSIER 059', 'NGC 1427', 'NGC 3628', 'NGC 0055', 'NGC 4457', 'NGC 4214', 'NGC 4459', 'NGC 3521']) # Real One
+#print Source_Overdensity_Master(['NGC 3631'])
+
+##print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'NGC 5813', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 086', 'MESSIER 084', 'MESSIER 083', 'MESSIER 082', 'NGC 0278', 'MESSIER 088', 'NGC 3585', 'NGC 7507', 'NGC 1637', 'NGC 4473', 'NGC 1365', 'MESSIER 074', 'NGC 4570', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4494', 'IC 1613', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 3923', 'NGC 891', 'NGC 1300', 'UGC 05340', 'NGC 3631', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 5253', 'NGC 4742', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 1700', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 4449', 'MESSIER 049', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 2865', 'MESSIER 059', 'NGC 1427', 'NGC 3628', 'NGC 0055', 'NGC 4457', 'NGC 4214', 'NGC 4459', 'NGC 3521']) #All #Real One
+
+##print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'NGC 5813', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 086', 'MESSIER 084', 'MESSIER 083', 'MESSIER 082', 'NGC 0278', 'MESSIER 088', 'NGC 3585', 'NGC 7507', 'NGC 1637', 'NGC 4473', 'NGC 1365', 'MESSIER 074', 'NGC 4570', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4494', 'IC 1613', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 3923', 'NGC 891', 'NGC 1300', 'UGC 05340', 'NGC 3631', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 5253', 'NGC 4742', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 1700', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 4449', 'MESSIER 049', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 2865', 'MESSIER 059', 'NGC 1427', 'NGC 3628', 'NGC 4457', 'NGC 4214', 'NGC 4459', 'NGC 3521']) #All #Real One without NGC 0055
+#print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 083', 'NGC 0278', 'MESSIER 088', 'NGC 1637', 'NGC 1365', 'MESSIER 074', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 891', 'NGC 1300', 'NGC 3631', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 3628', 'NGC 4457', 'NGC 4459', 'NGC 3521']) #Spirals #Real One
+
+#print Source_Overdensity_Master(['NGC 5813', 'MESSIER 086', 'MESSIER 084', 'NGC 3585', 'NGC 7507', 'NGC 4473', 'NGC 4570', 'NGC 4494', 'NGC 3923', 'NGC 4742', 'NGC 1700', 'MESSIER 049', 'NGC 2865', 'MESSIER 059', 'NGC 1427']) #Ellipticals #Real One
+
+#print Source_Overdensity_Master(['MESSIER 082', 'IC 1613', 'UGC 05340', 'NGC 5253', 'NGC 4449', 'NGC 0055', 'NGC 4214']) #Irregulars #Real One
+
+#------Runs after thesis-----#
+#Runs after Counts to Flux Bug Fix
+#print Source_Overdensity_Master(['NGC 3631'], Source_Overdensity_Plot_Run_B=True)
+print Source_Overdensity_Master(['NGC 2841', 'NGC 3877', 'NGC 5054', 'NGC 5813', 'MESSIER 108', 'MESSIER 066', 'MESSIER 061', 'MESSIER 063', 'MESSIER 086', 'MESSIER 084', 'MESSIER 083', 'MESSIER 082', 'NGC 0278', 'MESSIER 088', 'NGC 3585', 'NGC 7507', 'NGC 1637', 'NGC 4473', 'NGC 1365', 'MESSIER 074', 'NGC 4570', 'NGC 4321', 'NGC 5474', 'NGC 7090', 'MESSIER 094', 'MESSIER 095', 'NGC 4494', 'IC 1613', 'NGC 4477', 'NGC 2787', 'IC 5267', 'NGC 3923', 'NGC 891', 'NGC 1300', 'UGC 05340', 'NGC 3631', 'NGC 4314', 'NGC 4559', 'NGC 2681', 'NGC 5018', 'NGC 5253', 'NGC 4742', 'NGC 1672', 'NGC 4725', 'NGC 0891', 'NGC 6946', 'NGC 1291:[LFF2012] 084', 'NGC 3115', 'NGC 1332', 'NGC 1700', 'NGC 5584', 'NGC 7552', 'NGC 2997', 'NGC 4449', 'MESSIER 049', 'NGC 3198', 'NGC 0855', 'NGC 7793', 'NGC 2865', 'MESSIER 059', 'NGC 1427', 'NGC 3628', 'NGC 4457', 'NGC 4214', 'NGC 4459', 'NGC 3521'], Source_Overdensity_Plot_Run_B=True)

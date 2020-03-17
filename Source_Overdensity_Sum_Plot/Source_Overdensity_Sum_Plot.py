@@ -293,7 +293,8 @@ def Source_Histogram_Sum_Plot(Gname_L,Fname_Key="",Fileout_B=True,Outpath=False,
     """
     plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_D25_Total_L)
     plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_A,color="orange")
-    plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_A*5.0,color="yellow")
+    #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_A*5.0,color="yellow")
+    plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_A*3.0,color="gold")
     plt.vlines(1,0,Bin_Hight_Max,color='red') #Plots red line at D25
     #plt.xlabel('R (arcmin)')
     plt.xlabel('R (D25)')

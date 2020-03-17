@@ -1,3 +1,4 @@
+*.png
 Histogram_Notes/
 /Source_Overdensity_Plot/Source_Overdensity_Histograms/
 Source_Overdensity_Plot/Subpipe_A_Histogram_Code/
@@ -6,4 +7,7 @@ Source_Overdensity_Plot/Source_Overdensity_Histograms_Old_CSV_File/
 Source_Overdensity_Sum_Plot/Sum_Histograms/
 Source_Overdensity_Sum_Plot/Sum_Histograms_Old/
 Source_Overdensity_Sum_Plot/Sum_Histograms_Old_2/
+Source_Overdensity_Plot/Old_Source_Overdensity_Histograms/
+Source_Overdensity_Plot/Source_Overdensity_Histograms_Test/
+Source_Overdensity_Sum_Plot/Sum_Histograms_Old_3/
 Galaxy_Lists/

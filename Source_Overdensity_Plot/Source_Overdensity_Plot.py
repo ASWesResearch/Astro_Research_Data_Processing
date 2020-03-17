@@ -369,7 +369,21 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         #Bar_BG_A=plt.bar([0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0], BG_Source_L,color="red",alpha=0.5)
         #plt.plot([0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0], BG_Source_L)
         #plt.step([0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0], BG_Source_L)
-        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_L)
+        BG_Source_Plot_L=[0.0]
+        for i in range(0,len(BG_Source_L)-1):
+            BG_Source_Plot_L.append(BG_Source_L[i])
+        print "BG_Source_L : ", BG_Source_L
+        print "BG_Source_Plot_L : ", BG_Source_Plot_L
+        #BG_Source_D25_Total_L=list(BG_Source_D25_Total_A)
+        BG_Source_Plot_A=np.array(BG_Source_Plot_L)
+        BG_Source_Sigificance_Plot_A=3.0*BG_Source_Plot_A
+        #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_L)
+        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Plot_L)
+        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A,color="orange")
+        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*3.0,color="gold")
+        #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*3.0,color="goldenrod")
+        #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*5.0,color="gold")
+
         #BG_Bin_Hight=
         #print Bin_Hight_Max
         #plt.vlines(D25_S_Maj_Deg,0,Bin_Hight_Max,color='red') #Plots red line at D25
@@ -473,3 +487,6 @@ def Driver_Code(Gname):
 #Source_Histogram_Plot('NGC_1365')
 #Source_Histogram_Plot('NGC_3631')
 #Source_Histogram_Plot('MESSIER_066')
+#Outpath="/Volumes/xray/anthony/Research_Git/Data_Processing/Source_Overdensity/Source_Overdensity_Plot/Source_Overdensity_Histograms_Test/"
+#Source_Histogram_Plot('NGC_3631',Outpath="/Volumes/xray/anthony/Research_Git/Data_Processing/Source_Overdensity/Source_Overdensity_Plot/Source_Overdensity_Histograms_Test/")
+#Source_Histogram_Plot('NGC_3628',Outpath="/Volumes/xray/anthony/Research_Git/Data_Processing/Source_Overdensity/Source_Overdensity_Plot/Source_Overdensity_Histograms_Test/")

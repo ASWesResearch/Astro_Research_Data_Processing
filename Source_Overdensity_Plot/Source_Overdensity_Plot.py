@@ -94,7 +94,26 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
     Obs_ID_L=list(Obs_ID_A) #Obs_ID_L:-List, Observation_Idenification_List, The list containing all Observation IDs in the SQL_Standard_File (So it is indexable)
     #print "Obs_ID_L ", Obs_ID_L
     """
-    for Obs_ID in Galaxy_Obs_ID_L:
+    #for Obs_ID in Galaxy_Obs_ID_L:
+    for Evt2_File_L in Evt2_File_H_L:
+        Obs_ID=Evt2_File_L[0]
+        Evtfpath=Evt2_File_L[1]
+        Evtfname=Evtfpath.split("/")[-1]
+        Evtfname_Reduced=Evtfname.split(".")[0]
+        print "Evtfname_Reduced: ", Evtfname_Reduced
+        Area_L_Path="/Volumes/xray/anthony/Research_Git/Master_Code/Master_Output/"+Gname_Modifed+"/Area_Lists/"+str(Obs_ID)+"/"+Gname_Modifed+"_"+Evtfname_Reduced+"_Area_List.txt"
+        Area_File = open(Area_L_Path, "r")
+        Area_Str=Area_File.read()
+        Area_File.close()
+        Area_L=Area_Str.split("\n")
+        #print " Area_L Before: ", Area_L
+        Area_L.pop()
+        print "Area_L: ", Area_L
+        Area_L_Float=[]
+        for Area in Area_L:
+            Area_Float=float(Area)
+            Area_L_Float.append(Area_Float)
+        Area_L=Area_L_Float
         #print type(Obs_ID_L)
         #print Obs_ID_A
         #FGname_A=data["foundName"]
@@ -352,11 +371,29 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         #Hist_A=plt.hist(disA,[0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0, 20.0])
         #Hist_A=plt.hist(disA,[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
         #Hist_A=plt.hist(disA,[0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0])
-        Hist_A=plt.hist(disA,range=(0.0,10.0))
+        ##Hist_A=plt.hist(disA,range=(0.0,10.0)) #This is the correct plt.hist version used for the thesis
+        Hist_A=np.histogram(disA,range=(0.0,10.0))
         #Hist_A=plt.hist(disA,N_Bins)
         #print "Angular Hist_A : ", Hist_A
-        #print "Hist_A : ", Hist_A
+        print "Hist_A : ", Hist_A
         Bin_Hight_A=Hist_A[0]
+        Bin_Hight_A=np.array(Bin_Hight_A)
+        print "Bin_Hight_A Before: ", Bin_Hight_A
+        print "type(Bin_Hight_A) Before: ", type(Bin_Hight_A)
+        print "type(Bin_Hight_A[0]) Before: ", type(Bin_Hight_A[0])
+        Bin_A=Hist_A[1]
+        Area_A=np.array(Area_L)
+        print "Area_A: ", Area_A
+        print "type(Area_A): ", type(Area_A)
+        print "type(Area_A[0]): ", type(Area_A[0])
+        Num_Observed_Sources_A=Bin_Hight_A
+        Num_Missing_Sources_A=Num_Observed_Sources_A*((1.0-Area_A)/Area_A)
+        Bin_Hight_A=Bin_Hight_A*(1.0+((1.0-Area_A)/Area_A))
+        print "Bin_Hight_A: ", Bin_Hight_A
+        plt.bar([0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0], Num_Missing_Sources_A, align='edge', width=1.0, label='Missing', color='deepskyblue', bottom=Num_Observed_Sources_A)
+        plt.bar([0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0], Num_Observed_Sources_A, align='edge', width=1.0, label='Observed', color='royalblue')
+        ##Hist_Plot=plt.hist(Bin_Hight_A,range=(0.0,10.0))
+        ##plt.bar()
         Bin_Hight_Max=max(Bin_Hight_A)
         #print "Bin_Hight_Max : ", Bin_Hight_Max
         #/Volumes/xray/anthony/Research_Git/Master_Code/Master_Output/NGC_3631/Flux_90_Files/3951/NGC_3631_ObsID_3951_Flux_90.txt #Example Path
@@ -377,17 +414,21 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         #BG_Source_D25_Total_L=list(BG_Source_D25_Total_A)
         BG_Source_Plot_A=np.array(BG_Source_Plot_L)
         BG_Source_Sigificance_Plot_A=3.0*BG_Source_Plot_A
+        BG_Source_Sigificance_Max=max(BG_Source_Sigificance_Plot_A)
+        Plot_Max=max([Bin_Hight_Max,BG_Source_Sigificance_Max])
         #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_L)
-        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Plot_L)
-        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A,color="orange")
-        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*3.0,color="gold")
+        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Plot_L, color="darkorange")
+        ##plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A,color="orange") #This version was used for the thesis
+        plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A,color="gold")
+        #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*3.0,color="gold") #This was used for the thesis but is not longer requried after the counts to flux bug fix as the number of sources are never this high
         #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*3.0,color="goldenrod")
         #plt.step([0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0], BG_Source_Sigificance_Plot_A*5.0,color="gold")
 
         #BG_Bin_Hight=
         #print Bin_Hight_Max
         #plt.vlines(D25_S_Maj_Deg,0,Bin_Hight_Max,color='red') #Plots red line at D25
-        plt.vlines(D25_S_Maj_Arcmin,0,Bin_Hight_Max,color='red') #Plots red line at D25
+        #plt.vlines(D25_S_Maj_Arcmin,0,Bin_Hight_Max,color='red') #Plots red line at D25 #Version used for thesis
+        plt.vlines(D25_S_Maj_Arcmin,0,Plot_Max,color='red') #Plots red line at D25
         plt.xlabel('R (arcmin)')
         plt.ylabel('N')
         #print D25_S_Maj_Deg
@@ -460,7 +501,10 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
             for i in range(0,len(Overdensity_Ratio_L)):
                 Num_Sources=Bin_Hight_L[i]
                 Overdensity_Ratio=Overdensity_Ratio_L[i]
-                Cur_Line=str(Overdensity_Ratio)+","+str(Num_Sources)+"\n"
+                Num_Observed_Sources=Num_Observed_Sources_A[i]
+                Num_Missing_Sources=Num_Missing_Sources_A[i]
+                ##Cur_Line=str(Overdensity_Ratio)+","+str(Num_Sources)+"\n" #This version was used for the thesis
+                Cur_Line=str(Overdensity_Ratio)+","+str(Num_Sources)+","+str(Num_Observed_Sources)+","+str(Num_Missing_Sources)+"\n"
                 file.write(Cur_Line)
         #print "Done"
         #plt.show()

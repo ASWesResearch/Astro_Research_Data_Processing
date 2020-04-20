@@ -272,6 +272,8 @@ def Source_Histogram_Plot(Gname,Fileout_B=True,Outpath=False):
         #print "Hist_Max ", Hist_Max
         Flux_90_Path="/Volumes/xray/anthony/Research_Git/Master_Code/Master_Output/"+Gname_Modifed+"/Flux_90_Files/"+str(Obs_ID)+"/"+Gname_Modifed+"_ObsID_"+str(Obs_ID)+"_Flux_90.txt"
         BG_Source_HL=Background_Sources_Calc.Big_Background_Source_Calc(Flux_90_Path)
+        if(BG_Source_HL==False): #Rejects current observation if it's liminiting flux was never calculated due to it's background being about of range of the 4D Graph Data interpolation
+            continue
         #print "BG_Source_HL : ", BG_Source_HL
         BG_Source_Sum_Area_L=BG_Source_HL[4]
         BG_Source_Sum_Frac_L=[]

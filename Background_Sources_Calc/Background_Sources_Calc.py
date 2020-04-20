@@ -28,6 +28,9 @@ def Big_Background_Source_Calc(fpath,r_step=1.0):
     Background_Str_Reduced=Background_Str.split(":")[1]
     Background=float(Background_Str_Reduced)
     Fluxes_Str=data_L[1]
+    if("Background not in range of 4D Graph Data interpolation" in Fluxes_Str): #Not sure if this "in" test will work for a string segment, need to test later
+        print "Background not in range of 4D Graph Data interpolation"+" Observation Invaild"
+        return False
     #print "Fluxes_Str : ",Fluxes_Str
     Fluxes_L=Fluxes_Str.split("\n")
     #print "Fluxes_L : ", Fluxes_L
